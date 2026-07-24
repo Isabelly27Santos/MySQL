@@ -1,6 +1,8 @@
 CREATE SCHEMA clinica_vet;
-use clinica_vet;  
+use clinica_vet;
 -- DROP SCHEMA clinicavet;
+
+SET SQL_SAFE_UPDATES = 0;   -- remove o bloqueio de segurança pra deletar tabelas
 
 -- Responsavel(id, cpf, nome, email, fone)]
 -- DROP TABLE Responsavel;
@@ -76,9 +78,10 @@ CREATE TABLE Consulta (
 	id_vet INT NOT NULL,
     id_Animal INT NOT NULL,
     dt DATE NOT NULL,
-    horario INT NOT NULL,
+    horario TIME NOT NULL,
     FOREIGN KEY (id_vet) REFERENCES Veterinario(id), 
     FOREIGN KEY (id_Animal) REFERENCES Animal(id) 
 );
 
-SELECT * FROM Veterinario;
+-- SELECT * FROM animal;
+-- DESCRIBE consulta;
