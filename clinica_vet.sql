@@ -1,12 +1,13 @@
+-- CRIAÇÃO DE ESQUEMA E TABELAS
 CREATE SCHEMA clinica_vet;
 use clinica_vet;
--- DROP SCHEMA clinicavet;
+-- DROP SCHEMA clinica_vet;
 
 SET SQL_SAFE_UPDATES = 0;   -- remove o bloqueio de segurança pra deletar tabelas
 
--- Responsavel(id, cpf, nome, email, fone)]
--- DROP TABLE Responsavel;
-CREATE TABLE Responsavel (
+-- Tutor(id, cpf, nome, email, fone)]
+-- DROP TABLE Tutor;
+CREATE TABLE Tutor (
     id integer PRIMARY KEY auto_increment,    
     cpf varchar(12) NOT NULL UNIQUE,
 	nome varchar(100) NOT NULL,
@@ -14,37 +15,34 @@ CREATE TABLE Responsavel (
     fone varchar(16) NOT NULL
 );
 
-
--- Responsavel_endereço(id, id_resp, cep, rua, numero, complemento, cidade, uf)
--- DROP TABLE Responsavel_endereco;
-CREATE TABLE Responsavel_endereco (
+-- Tutor_endereço(id, id_resp, cep, rua, numero, complemento, cidade, uf)
+-- DROP TABLE Tutor_endereco;
+CREATE TABLE Tutor_endereco (
     id INT PRIMARY KEY auto_increment,
-	id_resp integer NOT NULL,
+	id_tutor integer NOT NULL,
 	cep varchar(12) NOT NULL,
     rua varchar(100),
     numero integer NOT NULL,
     complemento varchar(50),
     cidade varchar(50),
     uf varchar(2),
-	FOREIGN KEY (id_resp) REFERENCES Responsavel (id)
+	FOREIGN KEY (id_tutor) REFERENCES Tutor (id)
 );
-
 
 -- Animal(id, id_resp, peso, raca, especie, cor, sexo, data_nasc)
 -- DROP TABLE Animal;
 CREATE TABLE Animal (
     id INT PRIMARY KEY auto_increment,
-	id_resp INT NOT NULL,
+	id_tutor INT, -- NOT NULL
     nome VARCHAR(100) NOT NULL,
     peso decimal(5,2),
     raca VARCHAR(100) NOT NULL,
     especie VARCHAR(100),
 	cor VARCHAR(100),
-	sexo VARCHAR(10),
+	sexo ENUM('MACHO','FEMEA'),
 	data_nasc date,
-    FOREIGN KEY (id_resp) REFERENCES Responsavel(id)
+    FOREIGN KEY (id_tutor) REFERENCES Tutor(id)
 );
-
 
 -- Veterinário(id, nome, crmv, email, fone, especialidade)
 -- DROP TABLE Veterinario;
@@ -76,12 +74,13 @@ CREATE TABLE Veterinario_endereco (
 CREATE TABLE Consulta (
     id INT PRIMARY KEY auto_increment,
 	id_vet INT NOT NULL,
-    id_Animal INT NOT NULL,
+    id_animal INT NOT NULL,
     dt DATE NOT NULL,
     horario TIME NOT NULL,
     FOREIGN KEY (id_vet) REFERENCES Veterinario(id), 
     FOREIGN KEY (id_Animal) REFERENCES Animal(id) 
 );
+
 
 -- SELECT * FROM animal;
 -- DESCRIBE consulta;
