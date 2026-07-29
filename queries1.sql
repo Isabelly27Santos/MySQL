@@ -3,7 +3,7 @@ use clinica_vet;
 SET SQL_SAFE_UPDATES = 0;
 DESCRIBE consulta;      -- Mostra a estrutura da tabela consulta do BD
 
--- *** DQL - DATA QUERY LANGUAGE
+-- *** DQL - DATA QUERY LANGUAGE 
 -- select simples
 SELECT * FROM Animal;
 SELECT * FROM Tutor;
