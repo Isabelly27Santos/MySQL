@@ -7,7 +7,7 @@ DESCRIBE consulta;      -- Mostra a estrutura da tabela consulta do BD
 -- select simples
 SELECT * FROM Animal;
 SELECT * FROM Tutor;
-
+ 
 -- seleção
 SELECT * FROM Animal WHERE raca != 'pincher' AND data_nasc > '2020-01-01' AND peso >10;   -- cria um filtro para mostrar animais. O símbolo diferente pode ser != ou <>
 
