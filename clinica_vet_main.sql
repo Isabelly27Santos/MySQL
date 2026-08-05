@@ -1,6 +1,6 @@
 -- CRIAÇÃO DE ESQUEMA E TABELAS
 CREATE SCHEMA clinica_vet;
-use clinica_vet;
+use clinica_vet; 
 -- DROP SCHEMA clinica_vet;
 
 SET SQL_SAFE_UPDATES = 0;   -- remove o bloqueio de segurança pra deletar tabelas
