@@ -10,7 +10,7 @@ USE  loja_sephora  ;
 -- TABELA ENDERECO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS loja_sephora.endereco (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INT NOT NULL ,
   cep VARCHAR(45) NOT NULL,
   rua VARCHAR(45) NOT NULL,
   numero INT NOT NULL,
@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- TABELA CLIENTES
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.clientes  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL ,
    nome  VARCHAR(45) NOT NULL,
    cpf  VARCHAR(45) NOT NULL UNIQUE,
    fone  VARCHAR(45) NOT NULL,
@@ -48,7 +48,7 @@ ENGINE = InnoDB;
 -- TABELA PAGAMENTO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.pagamento  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL ,
    valor_total  DECIMAL(30,2) NOT NULL,
    forma_pagamento  SET('pix', 'debito', 'credito', 'dinheiro') NOT NULL,
    valor_pix  DECIMAL(30,2) NULL,
@@ -64,7 +64,7 @@ ENGINE = InnoDB;
 -- TABELA VENDEDOR
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.vendedor  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL ,
    nome  VARCHAR(45) NOT NULL,
    cpf  VARCHAR(45) NOT NULL,
    telefone  VARCHAR(45) NOT NULL,
@@ -86,12 +86,13 @@ ENGINE = InnoDB;
 -- TABELA VENDA
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.venda  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL ,
    data_criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
    fk_pagamento  INT NOT NULL,
    fk_clientes  INT NOT NULL,
    fk_vendedor  INT NOT NULL,
   PRIMARY KEY (id),
+  UNIQUE KEY uk_venda_pagamento (fk_pagamento),
   INDEX  fk_venda_pagamento_idx  ( fk_pagamento  ASC) VISIBLE,
   INDEX  fk_venda_clientes_idx  ( fk_clientes  ASC) VISIBLE,
   INDEX  fk_venda_vendedor_idx  ( fk_vendedor  ASC) VISIBLE,
@@ -112,7 +113,7 @@ ENGINE = InnoDB;
 -- TABELA PRODUTO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.produto  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL ,
    nome  VARCHAR(45) NOT NULL UNIQUE,
    marca  VARCHAR(45) NOT NULL,
    categoria  ENUM('perfume', 'cabelo', 'pele', 'unhas', 'maquiagem') NOT NULL,
@@ -128,7 +129,7 @@ ENGINE = InnoDB;
 -- TABELA ITEM 
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS  loja_sephora.item  (
-   id  INT NOT NULL AUTO_INCREMENT,
+   id  INT NOT NULL auto_increment,
    quantidade  INT NOT NULL,
    fk_venda  INT NOT NULL,
    fk_produto  INT NOT NULL,
@@ -149,132 +150,148 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 INSERT INTO endereco
-(cep, rua, numero, cidade, estado, pais, complemento, bairro)
+(id, cep, rua, numero, cidade, estado, pais, complemento, bairro)
 VALUES
-('01001-000','Rua das Flores',120,'São Paulo','SP','Brasil',NULL,'Centro'),
-('13010-001','Av. Brasil',45,'Campinas','SP','Brasil',NULL,'Jardim'),
-('18010-000','Rua XV de Novembro',78,'Sorocaba','SP','Brasil',NULL,'Centro'),
-('13300-120','Rua Itália',55,'Itu','SP','Brasil','Apto 12','Centro'),
-('13200-100','Rua dos Ipês',210,'Jundiaí','SP','Brasil',NULL,'Anhangabaú'),
-('09500-000','Rua Goiás',310,'São Caetano','SP','Brasil',NULL,'Centro'),
-('11010-000','Rua do Porto',92,'Santos','SP','Brasil',NULL,'Boqueirão'),
-('14010-000','Rua Paraná',88,'Ribeirão Preto','SP','Brasil',NULL,'Centro'),
-('15010-000','Rua Amazonas',170,'São José do Rio Preto','SP','Brasil',NULL,'Centro'),
-('17010-000','Rua Bahia',44,'Bauru','SP','Brasil',NULL,'Vila Nova'),
-('01002-000','Rua A',10,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01003-000','Rua B',20,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01004-000','Rua C',30,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01005-000','Rua D',40,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01006-000','Rua E',50,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01007-000','Rua F',60,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01008-000','Rua G',70,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01009-000','Rua H',80,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01010-000','Rua I',90,'São Paulo','SP','Brasil',NULL,'Centro'),
-('01010-050','Rua Sabiá',150,'São Paulo','SP','Brasil',NULL,'Centro');
+(1,'01001-000','Rua das Flores',120,'São Paulo','SP','Brasil',NULL,'Centro'),
+(2,'13010-001','Av. Brasil',45,'Campinas','SP','Brasil',NULL,'Jardim'),
+(3,'18010-000','Rua XV de Novembro',78,'Sorocaba','SP','Brasil',NULL,'Centro'),
+(4,'13300-120','Rua Itália',55,'Itu','SP','Brasil','Apto 12','Centro'),
+(5,'13200-100','Rua dos Ipês',210,'Jundiaí','SP','Brasil',NULL,'Anhangabaú'),
+(6,'09500-000','Rua Goiás',310,'São Caetano','SP','Brasil',NULL,'Centro'),
+(7,'11010-000','Rua do Porto',92,'Santos','SP','Brasil',NULL,'Boqueirão'),
+(8,'14010-000','Rua Paraná',88,'Ribeirão Preto','SP','Brasil',NULL,'Centro'),
+(9,'15010-000','Rua Amazonas',170,'São José do Rio Preto','SP','Brasil',NULL,'Centro'),
+(10,'17010-000','Rua Bahia',44,'Bauru','SP','Brasil',NULL,'Vila Nova'),
+(11,'01002-000','Rua A',10,'São Paulo','SP','Brasil',NULL,'Centro'),
+(12,'01003-000','Rua B',20,'São Paulo','SP','Brasil',NULL,'Centro'),
+(13,'01004-000','Rua C',30,'São Paulo','SP','Brasil',NULL,'Centro'),
+(14,'01005-000','Rua D',40,'São Paulo','SP','Brasil',NULL,'Centro'),
+(15,'01006-000','Rua E',50,'São Paulo','SP','Brasil',NULL,'Centro'),
+(16,'01007-000','Rua F',60,'São Paulo','SP','Brasil',NULL,'Centro'),
+(17,'01008-000','Rua G',70,'São Paulo','SP','Brasil',NULL,'Centro'),
+(18,'01009-000','Rua H',80,'São Paulo','SP','Brasil',NULL,'Centro'),
+(19,'01010-000','Rua I',90,'São Paulo','SP','Brasil',NULL,'Centro'),
+(20,'01010-050','Rua Sabiá',150,'São Paulo','SP','Brasil',NULL,'Centro');
 
 INSERT INTO clientes
-(nome, cpf, fone, email, status_cadastro, fk_endereco)
+(id, nome, cpf, fone, email, status_cadastro, fk_endereco)
 VALUES
-('Ana Silva','11111111111','11999990001','ana@email.com','ativo',1),
-('Bruno Costa','11111111112','11999990002','bruno@email.com','ativo',2),
-('Carlos Souza','11111111113','11999990003','carlos@email.com','ativo',3),
-('Daniela Lima','11111111114','11999990004','daniela@email.com','ativo',4),
-('Eduardo Alves','11111111115','11999990005','edu@email.com','ativo',5),
-('Fernanda Rocha','11111111116','11999990006','fernanda@email.com','ativo',6),
-('Gabriel Santos','11111111117','11999990007','gabriel@email.com','ativo',7),
-('Helena Martins','11111111118','11999990008','helena@email.com','ativo',8),
-('Igor Oliveira','11111111119','11999990009','igor@email.com','ativo',9),
-('Juliana Freitas','11111111120','11999990010','juliana@email.com','ativo',10),
-('Karen Gomes','11111111121','11999990011','karen@email.com','ativo',11),
-('Lucas Pereira','11111111122','11999990012','lucas@email.com','ativo',12),
-('Marina Lopes','11111111123','11999990013','marina@email.com','ativo',13),
-('Nicolas Ramos','11111111124','11999990014','nicolas@email.com','inativo',14),
-('Olivia Dias','11111111125','11999990015','olivia@email.com','ativo',15);
+(1,'Ana Silva','11111111111','11999990001','ana@email.com','ativo',1),
+(2,'Bruno Costa','11111111112','11999990002','bruno@email.com','ativo',2),
+(3,'Carlos Souza','11111111113','11999990003','carlos@email.com','ativo',3),
+(4,'Daniela Lima','11111111114','11999990004','daniela@email.com','ativo',4),
+(5,'Eduardo Alves','11111111115','11999990005','edu@email.com','ativo',5),
+(6,'Fernanda Rocha','11111111116','11999990006','fernanda@email.com','ativo',6),
+(7,'Gabriel Santos','11111111117','11999990007','gabriel@email.com','ativo',7),
+(8,'Helena Martins','11111111118','11999990008','helena@email.com','ativo',8),
+(9,'Igor Oliveira','11111111119','11999990009','igor@email.com','ativo',9),
+(10,'Juliana Freitas','11111111120','11999990010','juliana@email.com','ativo',10),
+(11,'Karen Gomes','11111111121','11999990011','karen@email.com','ativo',11),
+(12,'Lucas Pereira','11111111122','11999990012','lucas@email.com','ativo',12),
+(13,'Marina Lopes','11111111123','11999990013','marina@email.com','ativo',13),
+(14,'Nicolas Ramos','11111111124','11999990014','nicolas@email.com','inativo',14),
+(15,'Olivia Dias','11111111125','11999990015','olivia@email.com','ativo',15);
 
 INSERT INTO vendedor
-(nome,cpf,telefone,email,status_cadastro,fk_endereco,comissao)
+(id, nome,cpf,telefone,email,status_cadastro,fk_endereco,comissao)
 VALUES
-('Patrícia Melo','22222222221','11988880001','patricia@sephora.com','ativo',16,5.0),
-('Ricardo Lima','22222222222','11988880002','ricardo@sephora.com','ativo',17,4.5),
-('Sofia Costa','22222222223','11988880003','sofia@sephora.com','ativo',18,6.0),
-('Maria Alice Santos','22222214553','11988882903','mariaalice@sephora.com','inativo',20,6.0),
-('Thiago Alves','22222222224','11988880004','thiago@sephora.com','ativo',19,5.5);
+(1,'Patrícia Melo','22222222221','11988880001','patricia@sephora.com','ativo',16,5.0),
+(2,'Ricardo Lima','22222222222','11988880002','ricardo@sephora.com','ativo',17,4.5),
+(3,'Sofia Costa','22222222223','11988880003','sofia@sephora.com','ativo',18,6.0),
+(4,'Maria Alice Santos','22222214553','11988882903','mariaalice@sephora.com','inativo',20,6.0),
+(5,'Thiago Alves','22222222224','11988880004','thiago@sephora.com','ativo',19,5.5);
 
 INSERT INTO pagamento
-(valor_total,forma_pagamento,valor_pix,valor_credito,valor_debito,valor_dinheiro,desconto)
+(id, valor_total,forma_pagamento,valor_pix,valor_credito,valor_debito,valor_dinheiro,desconto)
 VALUES
-(199.90,'pix',199.90,NULL,NULL,NULL,10),
-(350.00,'credito',NULL,350.00,NULL,NULL,0),
-(89.90,'debito',NULL,NULL,89.90,NULL,0),
-(420.50,'dinheiro',NULL,NULL,NULL,420.50,20),
-(150.00,'pix',150,NULL,NULL,NULL,5),
-(79.90,'credito',NULL,79.90,NULL,NULL,0),
-(250.00,'pix',250,NULL,NULL,NULL,10),
-(180.00,'debito',NULL,NULL,180,NULL,0),
-(320.00,'credito',NULL,320,NULL,NULL,0),
-(540.00,'pix',540,NULL,NULL,NULL,20),
-(99.90,'dinheiro',NULL,NULL,NULL,99.90,0),
-(60.00,'pix',60,NULL,NULL,NULL,0),
-(870.00,'credito',NULL,870,NULL,NULL,50),
-(110.00,'debito',NULL,NULL,110,NULL,0),
-(240.00,'pix',240,NULL,NULL,NULL,15),
-(310.00,'credito',NULL,310,NULL,NULL,0),
-(185.00,'pix',185,NULL,NULL,NULL,0),
-(430.00,'credito',NULL,430,NULL,NULL,30),
-(155.00,'dinheiro',NULL,NULL,NULL,155,0),
-(280.00,'pix',280,NULL,NULL,NULL,10),
-(500.00,'credito',NULL,500,NULL,NULL,20),
-(130.00,'debito',NULL,NULL,130,NULL,0),
-(210.00,'pix',210,NULL,NULL,NULL,5),
-(95.00,'dinheiro',NULL,NULL,NULL,95,0),
-(670.00,'credito',NULL,670,NULL,NULL,40);
+(1,199.90,'pix',199.90,NULL,NULL,NULL,10),
+(2,350.00,'pix,credito',150.00,200.00,NULL,NULL,0),
+(3,89.90,'debito',NULL,NULL,89.90,NULL,0),
+(4,420.50,'dinheiro',NULL,NULL,NULL,420.50,20),
+(5,150.00,'pix',150.00,NULL,NULL,NULL,5),
+(6,79.90,'credito,dinheiro',NULL,49.90,NULL,30.00,0),
+(7,250.00,'pix',250.00,NULL,NULL,NULL,10),
+(8,180.00,'debito',NULL,NULL,180.00,NULL,0),
+(9,320.00,'pix,credito',120.00,200.00,NULL,NULL,0),
+(10,540.00,'pix',540.00,NULL,NULL,NULL,20),
+(11,99.90,'dinheiro',NULL,NULL,NULL,99.90,0),
+(12,60.00,'pix',60.00,NULL,NULL,NULL,0),
+(13,870.00,'credito,pix',370.00,500.00,NULL,NULL,50),
+(14,110.00,'debito',NULL,NULL,110.00,NULL,0),
+(15,240.00,'pix',240.00,NULL,NULL,NULL,15),
+(16,310.00,'credito,dinheiro',NULL,210.00,NULL,100.00,0),
+(17,185.00,'pix',185.00,NULL,NULL,NULL,0),
+(18,430.00,'credito,debito',NULL,250.00,180.00,NULL,30),
+(19,155.00,'dinheiro',NULL,NULL,NULL,155.00,0),
+(20,280.00,'pix',280.00,NULL,NULL,NULL,10),
+(21,500.00,'pix,credito,dinheiro',200.00,250.00,NULL,50.00,20),
+(22,130.00,'debito',NULL,NULL,130.00,NULL,0),
+(23,210.00,'pix',210.00,NULL,NULL,NULL,5),
+(24,95.00,'dinheiro,credito',NULL,40.00,NULL,55.00,0),
+(25,670.00,'pix,credito',170.00,500.00,NULL,NULL,40);
 
 INSERT INTO produto
-(nome,marca,categoria,preco,estoque)
+(id,nome,marca,categoria,preco,estoque)
 VALUES
-('Base Matte','Maybelline','maquiagem',89.90,50),
-('Corretivo Fit','Maybelline','maquiagem',49.90,40),
-('Batom Nude','MAC','maquiagem',119.90,30),
-('Máscara Cílios','Ruby Rose','maquiagem',39.90,70),
-('Paleta Glow','Mari Maria','maquiagem',149.90,20),
-('Perfume Lily','O Boticário','perfume',299.90,25),
-('Perfume Egeo','O Boticário','perfume',179.90,40),
-('Perfume La Vie','Lancôme','perfume',549.90,10),
-('Shampoo Repair','Wella','cabelo',89.90,30),
-('Condicionador Repair','Wella','cabelo',94.90,30),
-('Máscara Capilar','Lola','cabelo',59.90,35),
-('Óleo Capilar','Lola','cabelo',69.90,40),
-('Sérum Facial','Principia','pele',79.90,60),
-('Hidratante Facial','CeraVe','pele',99.90,45),
-('Protetor Solar','La Roche','pele',129.90,25),
-('Sabonete Facial','CeraVe','pele',69.90,35),
-('Creme Anti-idade','Nivea','pele',59.90,30),
-('Esmalte Vermelho','Risqué','unhas',9.90,120),
-('Esmalte Rosa','Colorama','unhas',10.90,100),
-('Base Fortalecedora','Risqué','unhas',12.90,80),
-('Top Coat','Colorama','unhas',14.90,70),
-('Removedor','Ideal','unhas',15.90,90),
-('Blush','MAC','maquiagem',149.90,18),
-('Iluminador','MAC','maquiagem',169.90,15),
-('Pó Compacto','Vult','maquiagem',54.90,40),
-('Primer','Bruna Tavares','maquiagem',79.90,35),
-('Delineador','Vult','maquiagem',39.90,60),
-('Gloss','Fenty','maquiagem',199.90,20),
-('Perfume Good Girl','Carolina Herrera','perfume',699.90,8),
-('Creme Corporal','Nivea','pele',29.90,50);
+(1,'Base Matte','Maybelline','maquiagem',89.90,50),
+(2,'Corretivo Fit','Maybelline','maquiagem',49.90,40),
+(3,'Batom Nude','MAC','maquiagem',119.90,30),
+(4,'Máscara Cílios','Ruby Rose','maquiagem',39.90,70),
+(5,'Paleta Glow','Mari Maria','maquiagem',149.90,20),
+(6,'Perfume Lily','O Boticário','perfume',299.90,25),
+(7,'Perfume Egeo','O Boticário','perfume',179.90,40),
+(8,'Perfume La Vie','Lancôme','perfume',549.90,10),
+(9,'Shampoo Repair','Wella','cabelo',89.90,30),
+(10,'Condicionador Repair','Wella','cabelo',94.90,30),
+(11,'Máscara Capilar','Lola','cabelo',59.90,35),
+(12,'Óleo Capilar','Lola','cabelo',69.90,40),
+(13,'Sérum Facial','Principia','pele',79.90,60),
+(14,'Hidratante Facial','CeraVe','pele',99.90,45),
+(15,'Protetor Solar','La Roche','pele',129.90,25),
+(16,'Sabonete Facial','CeraVe','pele',69.90,35),
+(17,'Creme Anti-idade','Nivea','pele',59.90,30),
+(18,'Esmalte Vermelho','Risqué','unhas',9.90,120),
+(19,'Esmalte Rosa','Colorama','unhas',10.90,100),
+(20,'Base Fortalecedora','Risqué','unhas',12.90,80),
+(21,'Top Coat','Colorama','unhas',14.90,70),
+(22,'Removedor','Ideal','unhas',15.90,90),
+(23,'Blush','MAC','maquiagem',149.90,18),
+(24,'Iluminador','MAC','maquiagem',169.90,15),
+(25,'Pó Compacto','Vult','maquiagem',54.90,40),
+(26,'Primer','Bruna Tavares','maquiagem',79.90,35),
+(27,'Delineador','Vult','maquiagem',39.90,60),
+(28,'Gloss','Fenty','maquiagem',199.90,20),
+(29,'Perfume Good Girl','Carolina Herrera','perfume',699.90,8),
+(30,'Creme Corporal','Nivea','pele',29.90,50);
 
 INSERT INTO venda
-(fk_pagamento,fk_clientes,fk_vendedor)
+(id,fk_pagamento,fk_clientes,fk_vendedor)
 VALUES
-(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,1),
-(6,6,2),(7,7,3),(8,8,4),(9,9,1),(10,10,2),
-(11,11,3),(12,12,4),(13,13,1),(14,14,2),(15,15,3),
-(16,1,4),(17,2,1),(18,3,2),(19,4,3),(20,5,4),
-(21,6,1),(22,7,2),(23,8,3),(24,9,4),(25,10,1),(1,11,2),
-(2,12,3),(3,13,4),(4,14,1),(5,15,2),(6,1,3),(7,2,4),
-(8,3,1),(9,4,2),(10,5,3),(11,6,4),(12,7,1),(13,8,2),
-(14,9,3),(15,10,4),(16,11,1),(17,12,2),(18,13,3),(19,14,4),
-(20,15,1),(21,1,2),(22,2,3),(23,3,4),(24,4,1),(25,5,2);
+(1,1,1,1),
+(2,2,2,2),
+(3,3,3,3),
+(4,4,4,4),
+(5,5,5,1),
+(6,6,6,2),
+(7,7,7,3),
+(8,8,8,4),
+(9,9,9,1),
+(10,10,10,2),
+(11,11,11,3),
+(12,12,12,4),
+(13,13,13,1),
+(14,14,14,2),
+(15,15,15,3),
+(16,16,1,4),
+(17,17,2,1),
+(18,18,3,2),
+(19,19,4,3),
+(20,20,5,4),
+(21,21,6,1),
+(22,22,7,2),
+(23,23,8,3),
+(24,24,9,4),
+(25,25,10,1);
 
 INSERT INTO item
 (quantidade,fk_venda,fk_produto)
@@ -316,7 +333,137 @@ SELECT * FROM pagamento;
 SELECT * FROM endereco;
 SELECT * FROM item;
 
-UPDATE vendedor SET fk_endereco = 20 WHERE status_cadastro = 'inativo';
+-- -----------------------------------------------------
+-- CONSULTAS DQL
+-- -----------------------------------------------------
+
+-- Os 10 produtos mais vendidos
+SELECT p.id, p.nome AS Produto,
+    SUM(i.quantidade) AS Total_Vendido,
+    SUM(i.quantidade*p.preco) AS Lucro
+FROM produto p
+JOIN item i
+    ON p.id = i.fk_produto
+GROUP BY p.id, p.nome
+ORDER BY Total_Vendido DESC
+LIMIT 10;
+
+-- Ganhos totais e total de itens vendidos de cada categoria
+SELECT
+    p.categoria,
+    SUM(i.quantidade) AS 'Unidades Vendidas',
+    SUM(i.quantidade * p.preco) AS Faturamento
+FROM produto p
+JOIN item i
+    ON p.id = i.fk_produto
+GROUP BY p.categoria
+ORDER BY faturamento DESC;
+
+-- Total de comissão que cada vendedor vai receber e total vendido
+SELECT
+    ve.nome AS vendedor,
+    ve.comissao AS percentual_comissao,
+    SUM(pa.valor_total) AS total_vendido,
+    ROUND (SUM(pa.valor_total * (ve.comissao / 100)),2) AS total_comissao
+FROM vendedor ve
+INNER JOIN venda v
+    ON ve.id = v.fk_vendedor
+INNER JOIN pagamento pa
+    ON v.fk_pagamento = pa.id
+GROUP BY ve.id, ve.nome, ve.comissao
+ORDER BY total_vendido DESC;
+
+
+-- Lista dos 10 compradores que mais gastaram na loja 
+SELECT 
+	c.id, c.nome,
+    SUM(p.valor_total) AS total_comprado
+    FROM clientes c
+    JOIN venda v
+		ON c.id = fk_clientes
+    JOIN pagamento p
+		ON fk_pagamento = p.id
+	GROUP BY c.id, c.nome
+	ORDER BY total_comprado DESC
+    LIMIT 10;
+
+
+-- Lista de produtos com estoque abaixo de 15
+SELECT 
+	p.id, p.nome, p.marca, p.estoque
+    FROM produto p
+    WHERE p.estoque <15;
+
+-- Total recebido em cada forma de pagamento
+SELECT
+SUM(p.valor_total) AS total_vendido,
+SUM(p.valor_pix) AS total_pix,
+SUM(p.valor_credito) AS total_credito,
+SUM(p.valor_debito) AS total_debito,
+SUM(p.valor_dinheiro) AS total_dinheiro,
+SUM(p.desconto) AS total_desconto
+FROM pagamento p;
+
+-- Tabela com: cliente, vendedor, produtos vendidos, total pago 
+SELECT 
+	v.id AS ID_Venda,
+    c.nome AS Comprador,
+    ve.nome AS Vendedor,
+    GROUP_CONCAT(p.nome SEPARATOR ', ') AS Produtos,  -- une em uma coluna os produtos que foram comprados em cada venda
+    SUM(p.preco * i.quantidade) AS Total_Pago
+FROM clientes c
+JOIN venda v
+    ON v.fk_clientes = c.id
+JOIN vendedor ve
+    ON ve.id = v.fk_vendedor
+JOIN item i
+    ON i.fk_venda = v.id
+JOIN produto p
+    ON p.id = i.fk_produto
+GROUP BY 
+    c.nome,
+    ve.nome,
+    v.id
+ORDER BY v.id;
+
+
+-- Tabela com o total que cada vendedor vendeu e comprador que atendeu
+
+SELECT 
+    ve.nome AS Vendedor,
+    GROUP_CONCAT(DISTINCT c.nome SEPARATOR ', ') AS Compradores_Atendidos,  -- une em uma coluna os produtos que foram comprados em cada venda
+    COUNT(DISTINCT c.id) AS Quant_Compradores,
+    SUM(p.preco * i.quantidade) AS Total_Pago
+FROM clientes c
+JOIN venda v
+    ON v.fk_clientes = c.id
+JOIN vendedor ve
+    ON ve.id = v.fk_vendedor
+JOIN item i
+    ON i.fk_venda = v.id
+JOIN produto p
+    ON p.id = i.fk_produto
+GROUP BY 
+    ve.nome
+ORDER BY Total_Pago DESC;
+
+
+-- Média de preço de produtos e média de valores recebidos por venda
+
+SELECT
+    ROUND ((SELECT AVG(preco)
+     FROM produto),2) AS Media_Preco_Produtos,   -- calcula a média do preço de todos os produtos e arredonda o resultado para mostrar só 2 casas decimais
+    ROUND((SELECT AVG(valor_total)
+     FROM pagamento),2) AS Media_Valor_Recebido;
+     
+
+-- Quanto a loja receberia se não oferecesse desconto
+SELECT
+	SUM(valor_total) AS total_com_desconto,
+    SUM(desconto) AS desconto,
+    SUM(valor_total-desconto)  AS total_sem_desconto
+FROM pagamento;
+    
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;   -- volta a validar as foreign keys
