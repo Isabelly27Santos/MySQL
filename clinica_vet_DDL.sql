@@ -10,7 +10,7 @@ ALTER TABLE tutor MODIFY COLUMN cpf VARCHAR(14);   -- MODIFY atualiza as caracte
 
 ALTER TABLE tutor CHANGE COLUMN fone telefone VARCHAR(16);  -- CHANGE renomeia o nome da coluna
 
-ALTER TABLE tutor ADD CONSTRAINT unique_fone UNIQUE (fone);  -- adiciona uma restrição em telefone para não aceitar valores repetidos
+ALTER TABLE tutor ADD CONSTRAINT unique_fone UNIQUE (fone);  -- adiciona uma restrição em telefone para não aceitar valores repetidos 
 
 CREATE TABLE medicamentos (
 	id INT,
