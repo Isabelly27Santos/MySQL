@@ -4,7 +4,7 @@ SET SQL_SAFE_UPDATES = 0;
 -- ---------------------------------------------------------- CONSULTAS USANDO STRINGS ---------------------------------------------------------------
 
 SELECT LPAD (id, 6, '0') AS Veterinário_id, nome, especialidade   -- LEFT PAD adiciona à esquerda de id, 6 dígitos de '0', RPAD adiciona à direita
-FROM veterinario;
+FROM veterinario; 
 
 UPDATE veterinario 
 SET email = REPLACE (email, '.com','.com.br')  -- Atualiza os emails que termina com .com para .com.br
