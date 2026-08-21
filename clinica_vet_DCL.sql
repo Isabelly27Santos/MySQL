@@ -6,7 +6,7 @@ SET SQL_SAFE_UPDATES = 0;
 -- CRIACAO DE USUÁRIOS
 -- Criar o usuário 'usuario_leitura' com uma senha segura
 	CREATE USER 'usuario_leitura'@'localhost' IDENTIFIED BY '123456';  
-    
+     
 -- Criar o usuário 'usuario_leitura' com uma senha segura
 	CREATE USER 'usuario_admin'@'localhost' IDENTIFIED BY '123456';
 	
