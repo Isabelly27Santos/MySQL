@@ -4,7 +4,7 @@ Exercícios feitos nas aulas de Banco de Dados utilizando a linguagem SQL e o SG
 
 - Criação de schemas e tabelas
 - Inserção e exclusão de dados
-- Consultas Com SELECT, JOIN e funções de agregação.
+- Consultas com SELECT, JOIN e funções de agregação.
 - Triggers
 - Functions e procedures
 - Comandos DTL e DCL
